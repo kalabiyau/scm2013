@@ -1,0 +1,20 @@
+{
+  "sha": "6305fcad445031ee61a33819b998b9f35c8e7924",
+  "sources": {
+    "minitest-handler-cookbook": {
+      "locked_version": "0.2.1",
+      "git": "git@github.com:btm/minitest-handler-cookbook.git",
+      "ref": "4891a2efa90d73472493a89c4b0f856e0454bd76"
+    },
+    "scm_check": {
+      "locked_version": "0.1.0",
+      "path": "cookbooks/scm_check"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    },
+    "minitest-handler": {
+      "locked_version": "0.2.1"
+    }
+  }
+}

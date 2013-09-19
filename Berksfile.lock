@@ -1,5 +1,5 @@
 {
-  "sha": "e717a54b1ca5ec5e9f50c4b72bf7c651e183a09c",
+  "sha": "7602cd66a9411689c258d01ab4ba0772eb362001",
   "sources": {
     "minitest-handler-cookbook": {
       "locked_version": "0.2.1",
@@ -8,7 +8,7 @@
     },
     "scm_check": {
       "locked_version": "0.1.0",
-      "path": "/home/kalabiyau/Code/SCM/chef/cookbooks/scm_check"
+      "path": "chef/cookbooks/scm_check"
     },
     "chef_handler": {
       "locked_version": "1.1.4",

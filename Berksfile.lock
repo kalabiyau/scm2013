@@ -1,9 +1,9 @@
 {
-  "sha": "7602cd66a9411689c258d01ab4ba0772eb362001",
+  "sha": "c231908bc0083b505c1dac0859312637439f8ab9",
   "sources": {
     "minitest-handler-cookbook": {
       "locked_version": "0.2.1",
-      "git": "git@github.com:btm/minitest-handler-cookbook.git",
+      "git": "https://github.com/btm/minitest-handler-cookbook.git",
       "ref": "4891a2efa90d73472493a89c4b0f856e0454bd76"
     },
     "scm_check": {

@@ -2,15 +2,7 @@
 <!DOCTYPE profile>
 <profile xmlns="http://www.suse.com/1.0/yast2ns" xmlns:config="http://www.suse.com/1.0/configns">
   <add-on>
-    <add_on_products config:type="list">
-      <listentry>
-        <media_url>http://schnell.suse.de/SLE11/SLE-11-SP3-SDK-GM/x86_64/DVD1/</media_url>
-        <product>sles_sdk_gm</product>
-        <product_dir>/</product_dir>
-        <ask_on_error config:type="boolean">false</ask_on_error>
-        <name>sles_sdk_gm</name>
-      </listentry>
-    </add_on_products>
+    <add_on_products config:type="list"/>
   </add-on>
   <bootloader>
     <device_map config:type="list">
@@ -21,16 +13,15 @@
     </device_map>
     <global>
       <activate>true</activate>
-      <boot_root>true</boot_root>
-      <default>SUSE Linux Enterprise Server 11 SP3 - 3.0.82-0.7</default>
+      <default>SUSE Linux Enterprise Server 11 SP3 - 3.0.76-0.11</default>
       <generic_mbr>true</generic_mbr>
-      <gfxmenu>/boot/message</gfxmenu>
+      <gfxmenu>(hd0,1)/boot/message</gfxmenu>
       <lines_cache_id>2</lines_cache_id>
       <timeout config:type="integer">8</timeout>
     </global>
     <initrd_modules config:type="list">
       <initrd_module>
-        <module>ahci</module>
+        <module>virtio_blk</module>
       </initrd_module>
       <initrd_module>
         <module>ata_piix</module>
@@ -39,24 +30,18 @@
         <module>ata_generic</module>
       </initrd_module>
       <initrd_module>
-        <module>jbd</module>
-      </initrd_module>
-      <initrd_module>
-        <module>mbcache</module>
-      </initrd_module>
-      <initrd_module>
-        <module>ext3</module>
+        <module>virtio_pci</module>
       </initrd_module>
     </initrd_modules>
     <loader_type>grub</loader_type>
     <sections config:type="list">
       <section>
-        <append>resume=/dev/vda1 splash=silent crashkernel=128M-:64M showopts</append>
-        <image>(hd0,1)/boot/vmlinuz-3.0.82-0.7-default</image>
+        <append>resume=/dev/vda1 splash=silent crashkernel=256M-:128M showopts</append>
+        <image>(hd0,1)/boot/vmlinuz-3.0.76-0.11-default</image>
         <initial>1</initial>
-        <initrd>(hd0,1)/boot/initrd-3.0.82-0.7-default</initrd>
+        <initrd>(hd0,1)/boot/initrd-3.0.76-0.11-default</initrd>
         <lines_cache_id>0</lines_cache_id>
-        <name>SUSE Linux Enterprise Server 11 SP3 - 3.0.82-0.7</name>
+        <name>SUSE Linux Enterprise Server 11 SP3 - 3.0.76-0.11</name>
         <original_name>linux</original_name>
         <root>/dev/vda2</root>
         <type>image</type>
@@ -64,10 +49,10 @@
       </section>
       <section>
         <append>showopts ide=nodma apm=off noresume edd=off powersaved=off nohz=off highres=off processor.max_cstate=1 nomodeset x11failsafe</append>
-        <image>(hd0,1)/boot/vmlinuz-3.0.82-0.7-default</image>
-        <initrd>(hd0,1)/boot/initrd-3.0.82-0.7-default</initrd>
+        <image>(hd0,1)/boot/vmlinuz-3.0.76-0.11-default</image>
+        <initrd>(hd0,1)/boot/initrd-3.0.76-0.11-default</initrd>
         <lines_cache_id>1</lines_cache_id>
-        <name>Failsafe -- SUSE Linux Enterprise Server 11 SP3 - 3.0.82-0.7</name>
+        <name>Failsafe -- SUSE Linux Enterprise Server 11 SP3 - 3.0.76-0.11</name>
         <original_name>failsafe</original_name>
         <root>/dev/vda2</root>
         <type>image</type>
@@ -75,9 +60,26 @@
       </section>
     </sections>
   </bootloader>
+  <ca_mgm>
+    <CAName>YaST_Default_CA</CAName>
+    <ca_commonName>YaST Default CA (e52)</ca_commonName>
+    <country>DE</country>
+    <locality></locality>
+    <organisation></organisation>
+    <organisationUnit></organisationUnit>
+    <password>ENTER PASSWORD HERE</password>
+    <server_commonName>e52.suse.de</server_commonName>
+    <server_email>postmaster@suse.de</server_email>
+    <state></state>
+    <takeLocalServerName config:type="boolean">false</takeLocalServerName>
+  </ca_mgm>
   <deploy_image>
     <image_installation config:type="boolean">false</image_installation>
   </deploy_image>
+  <firewall>
+    <enable_firewall config:type="boolean">false</enable_firewall>
+    <start_firewall config:type="boolean">false</start_firewall>
+  </firewall>
   <general>
     <ask-list config:type="list"/>
     <mode>
@@ -170,13 +172,6 @@
     </group>
     <group>
       <encrypted config:type="boolean">true</encrypted>
-      <gid>112</gid>
-      <group_password>!</group_password>
-      <groupname>gdm</groupname>
-      <userlist></userlist>
-    </group>
-    <group>
-      <encrypted config:type="boolean">true</encrypted>
       <gid>65534</gid>
       <group_password>x</group_password>
       <groupname>nogroup</groupname>
@@ -247,6 +242,13 @@
     </group>
     <group>
       <encrypted config:type="boolean">true</encrypted>
+      <gid>105</gid>
+      <group_password>!</group_password>
+      <groupname>puppet</groupname>
+      <userlist></userlist>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
       <gid>16</gid>
       <group_password>x</group_password>
       <groupname>dialout</groupname>
@@ -254,7 +256,7 @@
     </group>
     <group>
       <encrypted config:type="boolean">true</encrypted>
-      <gid>107</gid>
+      <gid>106</gid>
       <group_password>!</group_password>
       <groupname>polkituser</groupname>
       <userlist></userlist>
@@ -264,13 +266,6 @@
       <gid>10</gid>
       <group_password>x</group_password>
       <groupname>wheel</groupname>
-      <userlist></userlist>
-    </group>
-    <group>
-      <encrypted config:type="boolean">true</encrypted>
-      <gid>109</gid>
-      <group_password>!</group_password>
-      <groupname>pulse</groupname>
       <userlist></userlist>
     </group>
     <group>
@@ -299,13 +294,6 @@
       <gid>17</gid>
       <group_password>x</group_password>
       <groupname>audio</groupname>
-      <userlist>pulse</userlist>
-    </group>
-    <group>
-      <encrypted config:type="boolean">true</encrypted>
-      <gid>111</gid>
-      <group_password>!</group_password>
-      <groupname>suse-ncc</groupname>
       <userlist></userlist>
     </group>
     <group>
@@ -313,6 +301,13 @@
       <gid>49</gid>
       <group_password>x</group_password>
       <groupname>ftp</groupname>
+      <userlist></userlist>
+    </group>
+    <group>
+      <encrypted config:type="boolean">true</encrypted>
+      <gid>108</gid>
+      <group_password>!</group_password>
+      <groupname>suse-ncc</groupname>
       <userlist></userlist>
     </group>
     <group>
@@ -366,14 +361,7 @@
     </group>
     <group>
       <encrypted config:type="boolean">true</encrypted>
-      <gid>105</gid>
-      <group_password>!</group_password>
-      <groupname>sfcb</groupname>
-      <userlist>root</userlist>
-    </group>
-    <group>
-      <encrypted config:type="boolean">true</encrypted>
-      <gid>108</gid>
+      <gid>107</gid>
       <group_password>!</group_password>
       <groupname>ntp</groupname>
       <userlist></userlist>
@@ -383,20 +371,6 @@
       <gid>14</gid>
       <group_password>x</group_password>
       <groupname>uucp</groupname>
-      <userlist></userlist>
-    </group>
-    <group>
-      <encrypted config:type="boolean">true</encrypted>
-      <gid>110</gid>
-      <group_password>!</group_password>
-      <groupname>pulse-access</groupname>
-      <userlist></userlist>
-    </group>
-    <group>
-      <encrypted config:type="boolean">true</encrypted>
-      <gid>71</gid>
-      <group_password>!</group_password>
-      <groupname>ntadmin</groupname>
       <userlist></userlist>
     </group>
     <group>
@@ -474,6 +448,63 @@
       </hosts_entry>
     </hosts>
   </host>
+  <kdump>
+    <add_crash_kernel config:type="boolean">true</add_crash_kernel>
+    <crash_kernel>256M-:128M</crash_kernel>
+    <general>
+      <KDUMPTOOL_FLAGS></KDUMPTOOL_FLAGS>
+      <KDUMP_COMMANDLINE></KDUMP_COMMANDLINE>
+      <KDUMP_COMMANDLINE_APPEND></KDUMP_COMMANDLINE_APPEND>
+      <KDUMP_CONTINUE_ON_ERROR>true</KDUMP_CONTINUE_ON_ERROR>
+      <KDUMP_COPY_KERNEL>yes</KDUMP_COPY_KERNEL>
+      <KDUMP_CPUS>1</KDUMP_CPUS>
+      <KDUMP_DUMPFORMAT>lzo</KDUMP_DUMPFORMAT>
+      <KDUMP_DUMPLEVEL>31</KDUMP_DUMPLEVEL>
+      <KDUMP_FREE_DISK_SIZE>64</KDUMP_FREE_DISK_SIZE>
+      <KDUMP_HOST_KEY></KDUMP_HOST_KEY>
+      <KDUMP_IMMEDIATE_REBOOT>yes</KDUMP_IMMEDIATE_REBOOT>
+      <KDUMP_KEEP_OLD_DUMPS>5</KDUMP_KEEP_OLD_DUMPS>
+      <KDUMP_KERNELVER></KDUMP_KERNELVER>
+      <KDUMP_NETCONFIG>auto</KDUMP_NETCONFIG>
+      <KDUMP_NOTIFICATION_CC></KDUMP_NOTIFICATION_CC>
+      <KDUMP_NOTIFICATION_TO></KDUMP_NOTIFICATION_TO>
+      <KDUMP_POSTSCRIPT></KDUMP_POSTSCRIPT>
+      <KDUMP_PRESCRIPT></KDUMP_PRESCRIPT>
+      <KDUMP_REQUIRED_PROGRAMS></KDUMP_REQUIRED_PROGRAMS>
+      <KDUMP_SAVEDIR>file:///var/crash</KDUMP_SAVEDIR>
+      <KDUMP_SMTP_PASSWORD></KDUMP_SMTP_PASSWORD>
+      <KDUMP_SMTP_SERVER></KDUMP_SMTP_SERVER>
+      <KDUMP_SMTP_USER></KDUMP_SMTP_USER>
+      <KDUMP_TRANSFER></KDUMP_TRANSFER>
+      <KDUMP_VERBOSE>3</KDUMP_VERBOSE>
+      <KEXEC_OPTIONS></KEXEC_OPTIONS>
+    </general>
+  </kdump>
+  <keyboard>
+    <keymap>english-us</keymap>
+  </keyboard>
+  <language>
+    <language>en_US</language>
+    <languages></languages>
+  </language>
+  <ldap>
+    <base_config_dn></base_config_dn>
+    <bind_dn></bind_dn>
+    <create_ldap config:type="boolean">false</create_ldap>
+    <file_server config:type="boolean">false</file_server>
+    <ldap_domain>dc=example,dc=com</ldap_domain>
+    <ldap_server>127.0.0.1</ldap_server>
+    <ldap_tls config:type="boolean">true</ldap_tls>
+    <ldap_v2 config:type="boolean">false</ldap_v2>
+    <login_enabled config:type="boolean">true</login_enabled>
+    <member_attribute>member</member_attribute>
+    <mkhomedir config:type="boolean">false</mkhomedir>
+    <pam_password>exop</pam_password>
+    <sssd config:type="boolean">false</sssd>
+    <sssd_with_krb config:type="boolean">false</sssd_with_krb>
+    <start_autofs config:type="boolean">false</start_autofs>
+    <start_ldap config:type="boolean">false</start_ldap>
+  </ldap>
   <login_settings/>
   <networking>
     <dhcp_options>
@@ -481,32 +512,50 @@
       <dhclient_hostname_option>AUTO</dhclient_hostname_option>
     </dhcp_options>
     <dns>
-      <dhcp_hostname config:type="boolean">false</dhcp_hostname>
+      <dhcp_hostname config:type="boolean">true</dhcp_hostname>
       <domain>suse.de</domain>
-      <hostname>scc-vagrant</hostname>
+      <hostname>scc-vagrant-kvm</hostname>
       <resolv_conf_policy>auto</resolv_conf_policy>
       <searchlist config:type="list">
         <search>suse.de</search>
       </searchlist>
-      <write_hostname config:type="boolean">true</write_hostname>
+      <write_hostname config:type="boolean">false</write_hostname>
     </dns>
     <interfaces config:type="list">
       <interface>
         <bootproto>dhcp</bootproto>
         <device>eth0</device>
-        <name>82540EM Gigabit Ethernet Controller</name>
+        <name>Ethernet Card 0</name>
+        <startmode>auto</startmode>
+        <usercontrol>no</usercontrol>
+      </interface>
+      <interface>
+        <aliases>
+          <alias2>
+            <IPADDR>127.0.0.2</IPADDR>
+            <NETMASK>255.0.0.0</NETMASK>
+            <PREFIXLEN>8</PREFIXLEN>
+          </alias2>
+        </aliases>
+        <broadcast>127.255.255.255</broadcast>
+        <device>lo</device>
+        <firewall>no</firewall>
+        <ipaddr>127.0.0.1</ipaddr>
+        <netmask>255.0.0.0</netmask>
+        <network>127.0.0.0</network>
+        <prefixlen>8</prefixlen>
         <startmode>auto</startmode>
         <usercontrol>no</usercontrol>
       </interface>
     </interfaces>
     <managed config:type="boolean">false</managed>
-    <net-udev config:type="list">
-      <rule>
-        <name>eth0</name>
-        <rule>KERNELS</rule>
-        <value>0000:00:03.0</value>
-      </rule>
-    </net-udev>
+    <!--<net-udev config:type="list">-->
+      <!--<rule>-->
+        <!--<name>eth0</name>-->
+        <!--<rule>ATTR{address}</rule>-->
+        <!--<value>52:ll:00:bb:80:74</value>-->
+      <!--</rule>-->
+    <!--</net-udev>-->
     <routing>
       <ip_forward config:type="boolean">false</ip_forward>
     </routing>
@@ -527,7 +576,6 @@
           <mountby config:type="symbol">device</mountby>
           <partition_id config:type="integer">130</partition_id>
           <partition_nr config:type="integer">1</partition_nr>
-          <raid_options/>
           <resize config:type="boolean">false</resize>
           <size>1561492992</size>
         </partition>
@@ -542,7 +590,6 @@
           <mountby config:type="symbol">device</mountby>
           <partition_id config:type="integer">131</partition_id>
           <partition_nr config:type="integer">2</partition_nr>
-          <raid_options/>
           <resize config:type="boolean">false</resize>
           <size>19895844352</size>
         </partition>
@@ -574,6 +621,9 @@
       <timeout config:type="integer">0</timeout>
     </yesno_messages>
   </report>
+  <runlevel>
+    <default>3</default>
+  </runlevel>
   <software>
     <patterns config:type="list">
       <pattern>Minimal</pattern>
@@ -2405,6 +2455,10 @@
       <package>zvbi-devel</package>
     </remove-packages>
   </software>
+  <timezone>
+    <hwclock>UTC</hwclock>
+    <timezone>Europe/Berlin</timezone>
+  </timezone>
   <user_defaults>
     <expire></expire>
     <group>100</group>
@@ -2431,7 +2485,7 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>1000</uid>
-      <user_password>$2y$05$NA1Li9ZKJOLRW5mMTXm6/e5r8dltWS5RpDZpvHrI82aLE00V51tdi</user_password>
+      <user_password>$2y$05$Y8bicoXrwfUMzqsSqS1N4egiFBV0QhhD79ylbuALILVuCZD6h/NJe</user_password>
       <username>vagrant</username>
     </user>
     <user>
@@ -2544,6 +2598,42 @@
     </user>
     <user>
       <encrypted config:type="boolean">true</encrypted>
+      <fullname>Novell Customer Center User</fullname>
+      <gid>108</gid>
+      <home>/var/lib/YaST2/suse-ncc-fakehome</home>
+      <password_settings>
+        <expire></expire>
+        <flag></flag>
+        <inact></inact>
+        <max>99999</max>
+        <min>0</min>
+        <warn>7</warn>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>105</uid>
+      <user_password>*</user_password>
+      <username>suse-ncc</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
+      <fullname>FTP account</fullname>
+      <gid>49</gid>
+      <home>/srv/ftp</home>
+      <password_settings>
+        <expire></expire>
+        <flag></flag>
+        <inact></inact>
+        <max></max>
+        <min></min>
+        <warn></warn>
+      </password_settings>
+      <shell>/bin/bash</shell>
+      <uid>40</uid>
+      <user_password>*</user_password>
+      <username>ftp</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
       <fullname>Batch jobs daemon</fullname>
       <gid>25</gid>
       <home>/var/spool/atjobs</home>
@@ -2575,7 +2665,7 @@
       </password_settings>
       <shell>/bin/bash</shell>
       <uid>0</uid>
-      <user_password>$2y$05$NA1Li9ZKJOLRW5mMTXm6/e5r8dltWS5RpDZpvHrI82aLE00V51tdi</user_password>
+      <user_password>$2y$05$eTaVqI4.faZpwrp56E8BluHkasIuPXzA3GlLTMaJ6ReMl20NM7edC</user_password>
       <username>root</username>
     </user>
     <user>
@@ -2617,7 +2707,7 @@
     <user>
       <encrypted config:type="boolean">true</encrypted>
       <fullname>NTP daemon</fullname>
-      <gid>108</gid>
+      <gid>107</gid>
       <home>/var/lib/ntp</home>
       <password_settings>
         <expire></expire>
@@ -2706,6 +2796,24 @@
     </user>
     <user>
       <encrypted config:type="boolean">true</encrypted>
+      <fullname>Puppet daemon</fullname>
+      <gid>105</gid>
+      <home>/var/lib/puppet</home>
+      <password_settings>
+        <expire></expire>
+        <flag></flag>
+        <inact></inact>
+        <max>99999</max>
+        <min>0</min>
+        <warn>7</warn>
+      </password_settings>
+      <shell>/bin/false</shell>
+      <uid>103</uid>
+      <user_password>*</user_password>
+      <username>puppet</username>
+    </user>
+    <user>
+      <encrypted config:type="boolean">true</encrypted>
       <fullname>Manual pages viewer</fullname>
       <gid>62</gid>
       <home>/var/cache/man</home>
@@ -2725,7 +2833,7 @@
     <user>
       <encrypted config:type="boolean">true</encrypted>
       <fullname>PolicyKit</fullname>
-      <gid>107</gid>
+      <gid>106</gid>
       <home>/var/run/PolicyKit</home>
       <password_settings>
         <expire></expire>

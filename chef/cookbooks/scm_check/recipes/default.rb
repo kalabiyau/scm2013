@@ -18,15 +18,15 @@ file '/etc/test_me_please' do
   group 'root'
 end
 
+package 'redis' do
+  action :install
+end
+
 cookbook_file '/etc/redis/default.conf' do
   source 'redis_config.conf'
   mode 0600
   owner 'redis'
   group 'redis'
-end
-
-package 'redis' do
-  action :install
 end
 
 service 'redis' do

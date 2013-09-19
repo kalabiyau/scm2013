@@ -1,4 +1,4 @@
 site :opscode
 
-cookbook 'minitest-handler-cookbook', :git => 'git@github.com:btm/minitest-handler-cookbook.git'
+cookbook 'minitest-handler-cookbook', :git => 'https://github.com/btm/minitest-handler-cookbook.git'
 cookbook 'scm_check', :path => 'cookbooks/scm_check'

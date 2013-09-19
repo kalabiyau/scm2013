@@ -3,3 +3,5 @@
 *.box
 *.kitchen
 *.vagrant
+Berksfile
+Berksfile.lock

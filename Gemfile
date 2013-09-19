@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'veewee', :path => '/home/kalabiyau/Code/gemo/veewee'
+gem 'veewee', :git => 'git://github.com/jedi4ever/veewee.git', :ref => '291db2b571ff374a8ee9ac8929589225d55ea05d'
 gem 'activesupport', '~> 3.2.13'
 gem 'berkshelf', '2.0.0'
 gem 'mina', '0.2.1'

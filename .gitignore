@@ -5,3 +5,4 @@
 *.vagrant
 Berksfile
 Berksfile.lock
+Veeweefile

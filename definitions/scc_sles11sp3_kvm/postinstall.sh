@@ -3,16 +3,19 @@
 #
 
 date > /etc/vagrant_box_build_time
-# remove zypper locks on removed packages to avoid later dependency problems
+echo 'solver.allowVendorChange = true' >> /etc/zypp/zypp.conf
+echo 'solver.onlyRequires = true' >> /etc/zypp/zypp.conf
+
 zypper --non-interactive ar http://schnell.suse.de/SLE11/SLES-11-SP3-GM/x86_64/DVD1 sles
 zypper --non-interactive ar http://update.suse.de/zypp/x86_64/update/SLE-SERVER/11-SP3 sles_updates
 zypper --non-interactive ar http://dist.suse.de/install/SLP/SLE-11-SP3-SDK-LATEST/x86_64/DVD1 scc_sdk
 zypper --non-interactive ar http://update.suse.de/zypp/x86_64/update/SLE-SDK/11-SP3 scc_sdk_updates
 zypper --non-interactive ar http://download.suse.de/ibs/Devel:/SCC/SLE_11_SP3 devel_scc
-
-echo 'solver.allowVendorChange = true' >> /etc/zypp/zypp.conf
 zypper --non-interactive rl  \*
+
+# remove zypper locks on removed packages to avoid later dependency problems
 rm /etc/zypp/locks
+
 zypper --no-gpg-checks --non-interactive in --oldpackage --from devel_scc rpm
 zypper --no-gpg-checks --non-interactive in --from devel_scc ruby
 zypper --no-gpg-checks --non-interactive in --from devel_scc ruby-devel

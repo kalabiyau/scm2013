@@ -13,8 +13,9 @@ Veewee::Definition.declare({
   :boot_cmd_sequence => [
      '<Esc><Enter>',
      'linux netdevice=eth0 netsetup=dhcp install=cd:/',
-     ' lang=en_US autoyast=http://%IP%:8080/autoinst.xml',
-     ' textmode=1',
+     ' dud=http://%IP%:8080/zypp_req_only.dud lang=en_US',
+     ' autoyast=http://%IP%:8080/autoinst.xml',
+     ' insecure=1',
      '<Enter>'
   ],
   :ssh_login_timeout => '10000',
@@ -25,6 +26,6 @@ Veewee::Definition.declare({
   :ssh_guest_port => '22',
   :sudo_cmd => "echo '%p'|sudo -S sh '%f'",
   :shutdown_cmd => 'halt',
-  :postinstall_files => ['postinstall.sh'],
+  :postinstall_files => %w{ postinstall.sh },
   :postinstall_timeout => '10000'
 })
